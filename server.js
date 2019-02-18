@@ -50,16 +50,14 @@ app.get("/api/timestamp/:date_string", (req, res) => {
   var unixTime=null;
   var utcTime="Invalid Date";
   var data = req.params.date_string
-  console.log(data);
-  if (isInt(data)) {
-    console.log("is Int:" + data)
+  // check first 10 chars of param
+  if (isInt(data.substr(0,10))) {
     var date = new Date()
     date.setTime(data)
     unixTime = date.getTime()
     utcTime = date.toUTCString()
   } else {
     var msec = Date.parse(data)
-    console.log(msec)
     if (checkDateValue(msec) ) {
       var date = new Date(msec)
       unixTime = date.getTime()
