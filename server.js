@@ -67,6 +67,32 @@ app.get("/api/timestamp/:date_string", (req, res) => {
   res.json({unix: unixTime, utc: utcTime}) 
 })
 
+var stardate = require("./stardate.js").stardate
+
+app.get("/api/stardate/", (req, res) => {
+  var star = stardate(new Date())
+  res.json({stardate: star})
+})
+
+app.get("/api/stardate/:date_string", (req, res) => {
+  var starTime="Invalid Date"
+  var data = req.params.date_string
+  // check first 10 chars of param
+  if (isInt(data.substr(0,10))) {
+    var date = new Date()
+    date.setTime(data)
+    starTime = stardate(date)
+    
+  } else {
+    var msec = Date.parse(data)
+    if (checkDateValue(msec) ) {
+      var date = new Date(msec)
+      starTime = stardate(date)
+    } 
+  }
+  res.json({stardate: starTime})
+})
+
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
