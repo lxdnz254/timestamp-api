@@ -81,8 +81,7 @@ app.get("/api/stardate/:date_string", (req, res) => {
   if (isInt(data.substr(0,10))) {
     var date = new Date()
     date.setTime(data)
-    starTime = stardate(date)
-    
+    starTime = stardate(date) 
   } else {
     var msec = Date.parse(data)
     if (checkDateValue(msec) ) {
