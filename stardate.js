@@ -1,9 +1,14 @@
-// file to convert timestamp to start date
+// file to convert timestamp to star-date
+// formuala is: c + (1000*(y-b)) + ((1000/n)*(m + d -1))
+// where b is the base
+// c is star date year (base)
+// m is the number of days to the start of a given month
+// y is the number of days in the given year (includes leap years)
+// d is the day of the month
 
-const base=2005 //b
-const stardateYear=58000.0 //c
+const base=2005
+const stardateYear=58000.0
 
-// m is the number of days to start of month
 var getMonthNumber = (date) => {
   var first = new Date(date.getFullYear(), 0, 1);
   var theDay = Math.round(((date - first) / 1000 / 60 / 60 / 24) + .5, 0);
@@ -15,14 +20,11 @@ var isLeapYear = (date) => {
  return (leapYear.getDate() == 29) 
 }
 
-// y is the number of days in year (inculding leap years)
 var getYearNumber = (date) => {
  return isLeapYear(date) ? 366 : 365 
 }
 
-// d is the day of the month
 var stardate = (date) => {
-  // c + (1000*(y-b)) + ((1000/n)*(m + d -1))
   var sDate = stardateYear 
     + (1000 * (date.getFullYear() - base)) 
     + ((1000/getYearNumber(date))
